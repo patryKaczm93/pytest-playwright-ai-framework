@@ -1,6 +1,9 @@
 import pytest
 import os
+import time
 from framework.browser.browser_manager import BrowserManager
+from framework.pages.login_page import LoginPage
+
 
 @pytest.fixture
 def page(request):
@@ -38,5 +41,11 @@ def pytest_runtest_makereport(item, call):
         if page:
 
             os.makedirs("reports/screenshots", exist_ok=True)
-            screenshot_path = f"reports/screenshots/{item.name}_FAILED.png"
+            worker = getattr(item.config, "workerinput", {"workerid": "main"})["workerid"]
+            timestamp = time.strftime("%Y%m%d-%H%M%S")
+            screenshot_path = f"reports/screenshots/{item.name}_{worker}_{timestamp}.png"
             page.screenshot(path=screenshot_path)
+
+@pytest.fixture
+def login_page(page):
+    return LoginPage(page)

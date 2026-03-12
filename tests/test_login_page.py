@@ -1,12 +1,8 @@
-from framework.pages.login_page import LoginPage
-
-def test_login_page(page):
-
-    login_page = LoginPage(page)
+def test_login_page(login_page):
 
     login_page.open("https://practice.expandtesting.com/login")
 
-    login_page.login("abs", "abs")
+    login_page.login("practice", "SuperSecretPassword!")
 
-    assert "Test Login Page for Automation Testing Practice" in page.title()
+    assert login_page.is_logged_in()
 

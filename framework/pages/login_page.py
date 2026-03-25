@@ -1,3 +1,4 @@
+import allure
 from framework.pages.base_page import BasePage
 
 class LoginPage(BasePage):
@@ -7,7 +8,7 @@ class LoginPage(BasePage):
     LOGIN_BUTTON = "button[type='submit']"
     SUCCESS_HEADER = "h1"
 
-
+    @allure.step("Logowanie uzytkownika")
     def login(self, username, password):
 
         self.page.locator(self.USERNAME_INPUT).fill(username)

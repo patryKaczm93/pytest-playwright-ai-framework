@@ -1,6 +1,7 @@
 import pytest
 import os
 import time
+import allure
 from framework.browser.browser_manager import BrowserManager
 from framework.pages.login_page import LoginPage
 
@@ -44,7 +45,11 @@ def pytest_runtest_makereport(item, call):
             worker = getattr(item.config, "workerinput", {"workerid": "main"})["workerid"]
             timestamp = time.strftime("%Y%m%d-%H%M%S")
             screenshot_path = f"reports/screenshots/{item.name}_{worker}_{timestamp}.png"
-            page.screenshot(path=screenshot_path)
+            screenshot = page.screenshot(path=screenshot_path)
+
+            allure.attach(screenshot,
+                          name ="screenshot",
+                          attachment_type=allure.attachment_type.PNG)
 
 @pytest.fixture
 def login_page(page):
